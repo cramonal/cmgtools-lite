@@ -17,6 +17,7 @@ parser.add_option("--savefile", dest="savefile", action="store_true", default=Fa
 parser.add_option("--categorize", dest="categ", type="string", nargs=3, default=None, help="Split in categories. Requires 3 arguments: expression, binning, bin labels")
 parser.add_option("--categorize-by-ranges", dest="categ_ranges", type="string", nargs=2, default=None, help="Split in categories according to the signal extraction variables. Requires 2 arguments: binning (in bin numbers), bin labels")
 
+parser.add_option("--scanregex", dest="scanregex", type="string", default="_SM_", help="Regex expression to parse parameters of the scan")
 parser.add_option("--regularize", dest="regularize", action="store_true", default=False, help="Regularize templates")
 parser.add_option("--threshold", dest="threshold", type=float, default=0.0, help="Minimum event yield to consider processes")
 parser.add_option("--filter", dest="filter", type="string", default=None, help="File with list of processes to be removed from the datacards")
@@ -56,8 +57,13 @@ if options.savefile:
         h.writeToFile(savefile, takeOwnership=False)
     savefile.Close()
 
+pattern = re.compile( options.scanregex ) 
 if options.asimov:
-    if options.asimov in ("s","sig","signal","s+b"):
+    print(options.asimov)
+    match = pattern.search( options.asimov.split(',')[0] )
+    if  ',' in options.asimov:
+        asimovprocesses =[x for x in mca.listSignals() if x in options.asimov.split(',')] + mca.listBackgrounds()
+    elif options.asimov in ("s","sig","signal","s+b"):
         asimovprocesses = mca.listSignals() + mca.listBackgrounds()
     elif options.asimov in ("b","bkg","background", "b-only"):
         asimovprocesses = mca.listBackgrounds()
@@ -94,17 +100,40 @@ else:
 
 if options.filter: 
     toremove=[]
+    toremove_bin=[]
     with open(options.filter, 'r') as f:
         for l in f.readlines(): 
-            binname,proc = l.split(':')
-            procpattern = re.compile( proc.rstrip() ) 
-            if binname in allreports:
-                for p in allreports[binname]:
+            if len(l.split(':')) == 2:
+               binname,proc = l.split(':')
+               procpattern = re.compile( proc.rstrip() ) 
+               if binname in allreports:
+                  for p in allreports[binname]:
                     if procpattern.match(p):
                         if (binname,p) not in toremove:
                            toremove.append( (binname, p))
+            elif len(l.split(':')) == 3: #drop process in specific bin
+                 binname,proc,bindrop = l.split(':')
+                 procpattern = re.compile( proc.rstrip() ) 
+                 if binname in allreports:
+                    for p in allreports[binname]:
+                       if procpattern.match(p):
+                         if (binname,p) not in toremove_bin:
+                            toremove_bin.append( (binname, p, bindrop))
     for binname,p in toremove:
         allreports[binname].pop(p)
+    
+
+    for binname,p, bindrop in toremove_bin:
+        if (binname,p) in toremove: continue
+        print(type(allreports[binname][p])) 
+        report = allreports[binname]
+        for pi,h in report.iteritems(): 
+            if pi == p:
+               #hnew = h.Clone()
+               h.SetBinContent(int(bindrop),0.0) 
+               h.SetBinError(int(bindrop),0.0)
+               #allreports[binname].pop(p)
+               #allreports[binname][p] = h
 
 for binname, report in allreports.iteritems():
   if options.bbb:
@@ -158,13 +187,17 @@ for binname, report in allreports.iteritems():
                     if variants[d].GetBinContent( bin ) == 0: 
                         shift = variants[1-d].GetBinContent(bin); shift = max(5e-6, shift)
                         variants[d].SetBinContent( bin, h.raw().GetBinContent( bin )**2/shift)
-                    if variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin) > 10: 
-                        print "Warning: big shift in template for %s %s %s %s in bin %d: variation = %g"%( binname, p, name, d, bin, variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin))
-                        variants[d].SetBinContent( bin, 10*h.raw().GetBinContent(bin) )
-                    if variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin) < 0.1: 
-                        print "Warning: big shift in template for %s %s %s %s in bin %d: variation = %g"%( binname, p, name, d, bin, variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin))
-                        variants[d].SetBinContent( bin, 0.1*h.raw().GetBinContent(bin) )
-
+                    if h.raw().GetBinContent(bin)!=0:
+                       if variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin) > 10: 
+                          print "Warning: big shift in template for %s %s %s %s in bin %d: variation = %g"%( binname, p, name, d, bin, variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin))
+                          variants[d].SetBinContent( bin, 10*h.raw().GetBinContent(bin) )
+                    
+                       if variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin) < 0.1: 
+                          print "Warning: big shift in template for %s %s %s %s in bin %d: variation = %g"%( binname, p, name, d, bin, variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin))
+                          variants[d].SetBinContent( bin, 0.1*h.raw().GetBinContent(bin) )
+                    else:
+                       variants[d].SetBinContent( bin, 0.1*h.raw().GetBinContent(bin) )
+                       variants[d].SetBinError( bin, 0.1*h.raw().GetBinError(bin) )
             effshape[p] = variants 
     if isShape:
         if options.regularize: 
