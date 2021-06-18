@@ -1,0 +1,12 @@
+syst_ttH_NLO_hww      : TTHnobb_fxfx :0.5071*0.418:  LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  && (GenHiggsDecayMode==24);  FillColor=ROOT.kCyan
+syst_ttH_NLO_hzz      : TTHnobb_fxfx :0.5071*0.418:  LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  && (GenHiggsDecayMode==23);  FillColor=ROOT.kCyan
+syst_ttH_NLO_htt      : TTHnobb_fxfx :0.5071*0.418:  LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  && (GenHiggsDecayMode==15);  FillColor=ROOT.kCyan
+syst_ttH_NLO_hmm      : TTHnobb_fxfx :0.5071*0.418:  LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  && (GenHiggsDecayMode==13);  FillColor=ROOT.kCyan
+syst_ttH_NLO_hzg      : TTHnobb_fxfx :0.5071*0.418:  LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  && (GenHiggsDecayMode==22);  FillColor=ROOT.kCyan
+
+#syst_ttH_LO_hww :TTH_ctcvcp_new: xsec*LHEReweightingWeight[11]  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10
+#syst_ttH_LO_hzz :TTH_ctcvcp_new: xsec*LHEReweightingWeight[11]  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10
+#syst_ttH_LO_htt :TTH_ctcvcp_new: xsec*LHEReweightingWeight[11]  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10
+#syst_ttH_LO_hmm :TTH_ctcvcp_new: xsec*LHEReweightingWeight[11]  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && (GenHiggsDecayMode==13); FillColor=ROOT.kOrange+10
+#syst_ttH_LO_hzg :TTH_ctcvcp_new: xsec*LHEReweightingWeight[11]  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && (GenHiggsDecayMode==22); FillColor=ROOT.kOrange+10
+
