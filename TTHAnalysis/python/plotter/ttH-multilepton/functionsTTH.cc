@@ -91,6 +91,50 @@ float mvaCat(float ttH, float rest, float ttW, float thq){
 int ttH_catIndex_2lss(int LepGood1_pdgId, int LepGood2_pdgId, float tth, float ttw, float thq, float rest)
 {
 
+//2lss_ttH
+//2lss_ee_rest
+//2lss_ee_ttw
+//2lss_ee_thq
+//
+//2lss_em_rest
+//2lss_em_ttw
+//2lss_em_thq
+//
+//2lss_mm_rest
+//2lss_mm_ttw
+//2lss_mm_thq  
+  int flch = 0;
+  int procch = 0;
+
+  if ((abs(LepGood1_pdgId)+abs(LepGood2_pdgId) == 22) && !(tth >= ttw && tth >= thq && tth >= rest))
+    flch = 0;
+  else if ((abs(LepGood1_pdgId)+abs(LepGood2_pdgId) == 24) && !(tth >= ttw && tth >= thq && tth >= rest))
+    flch = 1;
+  else if ((abs(LepGood1_pdgId)+abs(LepGood2_pdgId) == 26) && !(tth >= ttw && tth >= thq && tth >= rest))
+    flch = 2;
+  else if (tth >= ttw && tth >= thq && tth >= rest)
+    flch = 0;
+  else
+    cout << "[2lss]: It shouldnt be here. pdgids are " << abs(LepGood1_pdgId) << " " << abs(LepGood2_pdgId)  << endl;
+
+  if (tth >= ttw && tth >= thq && tth >= rest)
+    procch = 0;
+  else if (rest >= tth && rest >= ttw && rest >= thq)
+    procch = 1;
+  else if (ttw >= tth && ttw >= rest && ttw >= thq)
+    procch = 2;
+  else if (thq >= tth && thq >= rest && thq >= ttw)
+    procch = 3;
+  else 
+    cout << "[2lss]: It shouldnt be here. DNN scores are " << tth << " " << rest << " " << ttw << " " << thq << endl;
+      
+  return flch*3+procch+1;
+
+}
+
+
+int ttH_catIndex_2lss_old(int LepGood1_pdgId, int LepGood2_pdgId, float tth, float ttw, float thq, float rest)
+{
 //2lss_ee_ttH
 //2lss_ee_rest
 //2lss_ee_ttw
@@ -127,29 +171,31 @@ int ttH_catIndex_2lss(int LepGood1_pdgId, int LepGood2_pdgId, float tth, float t
     cout << "[2lss]: It shouldnt be here. DNN scores are " << tth << " " << rest << " " << ttw << " " << thq << endl;
       
   return flch*4+procch+1;
-
 }
 
-
 std::vector<TString> bin2lsslabels = {
-  "ee_ttHnode","ee_Restnode","ee_ttWnode","ee_tHQnode",
-  "em_ttHnode","em_Restnode","em_ttWnode","em_tHQnode",
-  "mm_ttHnode","mm_Restnode","mm_ttWnode","mm_tHQnode"
+  "ttHnode","ee_Restnode","ee_ttWnode","ee_tHQnode",
+  "em_Restnode","em_ttWnode","em_tHQnode",
+  "mm_Restnode","mm_ttWnode","mm_tHQnode"
 };
 TFile* f2lssBins;
 
-std::map<TString,int> bins2lss = {{"ee_ttHnode",5},{"ee_Restnode",8},{"ee_ttWnode",6},{"ee_tHQnode",4},
-				  {"em_ttHnode",13},{"em_Restnode",8},{"em_ttWnode",19},{"em_tHQnode",11},
-				  {"mm_ttHnode",13},{"mm_Restnode",11},{"mm_ttWnode",15},{"mm_tHQnode",7}};
+std::map<TString,int> bins2lss = {{"ttHnode",13},{"ee_Restnode",8},{"ee_ttWnode",6},{"ee_tHQnode",4},
+				  {"em_Restnode",8},{"em_ttWnode",19},{"em_tHQnode",11},
+				  {"mm_Restnode",11},{"mm_ttWnode",15},{"mm_tHQnode",7}};
 std::map<TString, TH1F*> binHistos2lss;
 std::map<TString, int> bins2lsscumul;
 
 
-std::map<TString, int> bins2lsscumul_cp;
-std::map<TString,int> bins2lss_withcp = {{"ee_ttHnode",5*2},{"ee_Restnode",8},{"ee_ttWnode",6},{"ee_tHQnode",4},
-					 {"em_ttHnode",13*4},{"em_Restnode",8},{"em_ttWnode",19},{"em_tHQnode",11},
-					 {"mm_ttHnode",13*4},{"mm_Restnode",11},{"mm_ttWnode",15},{"mm_tHQnode",7}};
+//std::map<TString, int> bins2lsscumul_cp;
+//std::map<TString,int> bins2lss_withcp = {{"ee_ttHnode",5*2},{"ee_Restnode",8},{"ee_ttWnode",6},{"ee_tHQnode",4},
+//					 {"em_ttHnode",13*4},{"em_Restnode",8},{"em_ttWnode",19},{"em_tHQnode",11},
+//					 {"mm_ttHnode",13*4},{"mm_Restnode",11},{"mm_ttWnode",15},{"mm_tHQnode",7}};
 
+std::map<TString, int> bins2lsscumul_cp;
+std::map<TString,int> bins2lss_withcp = {{"ttHnode",13*4},{"ee_Restnode",8},{"ee_ttWnode",6},{"ee_tHQnode",4},
+					 {"em_Restnode",8},{"em_ttWnode",19},{"em_tHQnode",11},
+					 {"mm_Restnode",11},{"mm_ttWnode",15},{"mm_tHQnode",7}};
 
 int ttH_catIndex_2lss_MVA_CP(int LepGood1_pdgId, int LepGood2_pdgId, float tth, float ttw, float thq, float rest, float cp)
 {
@@ -158,7 +204,21 @@ int ttH_catIndex_2lss_MVA_CP(int LepGood1_pdgId, int LepGood2_pdgId, float tth, 
     f2lssBins = TFile::Open("../../data/kinMVA/DNNBin_v3_xmas.root");
     for (auto & la : bin2lsslabels){
       int bins = bins2lss[la];
-      binHistos2lss[la] = (TH1F*) f2lssBins->Get(Form("%s_2018_Map_nBin%d", la.Data(), bins));
+      auto la_n = la;
+      if (la == "ttHnode"){
+         if (abs(LepGood1_pdgId)+abs(LepGood2_pdgId) == 22)
+            la_n = "ee_ttHnode";
+         else if (abs(LepGood1_pdgId)+abs(LepGood2_pdgId) == 24)
+            la_n = "em_ttHnode";
+         else if (abs(LepGood1_pdgId)+abs(LepGood2_pdgId) == 26)
+            la_n = "mm_ttHnode";
+         //cout << la << la_n << '\n';
+         binHistos2lss[la] = (TH1F*) f2lssBins->Get(Form("%s_2018_Map_nBin%d", la_n.Data(), bins));
+      }
+      else{
+         //cout << la << "other" << '\n';
+         binHistos2lss[la] = (TH1F*) f2lssBins->Get(Form("%s_2018_Map_nBin%d", la.Data(), bins));
+       }
       bins2lsscumul_cp[la] = offset;
       offset += bins2lss_withcp[la];
     }
@@ -170,18 +230,18 @@ int ttH_catIndex_2lss_MVA_CP(int LepGood1_pdgId, int LepGood2_pdgId, float tth, 
   int cpidx=0; int cpbins=1;
   if (tth >= ttw && tth >= thq && tth >= rest){
     mvavar = tth;
-    if (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) == 22){
-      cpbins=2;
-      if (cp < 0.165208) cpidx=0;
-      else cpidx=1;
-    }
-    else{
+    //if (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) == 22){
+    //  cpbins=2;
+    //  if (cp < 0.165208) cpidx=0;
+    //  else cpidx=1;
+   // }
+    //else{
       cpbins=4;
       if      (cp < 0.128845)  cpidx = 0;
       else if (cp < 0.165208)  cpidx = 1;
       else if (cp < 0.2208)    cpidx = 2;
       else                     cpidx = 3;
-    }
+    //}
   }
   else if (rest >= tth && rest >= ttw && rest >= thq)
     mvavar =rest;
@@ -200,11 +260,10 @@ int ttH_catIndex_2lss_MVA_CP_ttH(int LepGood1_pdgId, int LepGood2_pdgId, float t
   int b;
   b = -99;
   int bin = ttH_catIndex_2lss_MVA_CP(LepGood1_pdgId, LepGood2_pdgId, tth,  ttw, thq, rest, cp);
-  if (bin <=10) b = bin;
-  else if (bin>=29 && bin<=80) b =bin-18;
-  else if (bin>=119 && bin<=170) b = bin-(18+38);
+  if (bin <=52) b = bin;
   else 
     b=-99;
+    cout << "over " << b;
   return b;
 }
 
@@ -213,22 +272,22 @@ int ttH_catIndex_2lss_MVA_CP_Rest(int LepGood1_pdgId, int LepGood2_pdgId, float 
   int b;
   b = -99;
   int bin = ttH_catIndex_2lss_MVA_CP(LepGood1_pdgId, LepGood2_pdgId, tth,  ttw, thq, rest, cp);
-  if (bin >10 && bin <=18) b = bin-10;
-  else if (bin>80 && bin<=88) b =bin-62-10;
-  else if (bin>170 && bin<=181) b = bin-(62+82+10);
+  if (bin >52 && bin <=60) b = bin-52;
+  else if (bin>69 && bin<=78) b =bin-52-10;
+  else if (bin>107 && bin<=119) b = bin-(52+10+30);
   else 
     b=-99;
   return b;
 }
-//fixme
+
 int ttH_catIndex_2lss_MVA_CP_ttW(int LepGood1_pdgId, int LepGood2_pdgId, float tth, float ttw, float thq, float rest, float cp)
 {
   int b;
   b = -99;
   int bin = ttH_catIndex_2lss_MVA_CP(LepGood1_pdgId, LepGood2_pdgId, tth,  ttw, thq, rest, cp);
-  if (bin >=19 && bin <25) b = bin-10-8;
-  else if (bin>88 && bin<=107) b =bin-64-10-8;
-  else if (bin>=181 && bin<=196) b = bin-(74+64+10+8);
+  if (bin >=61 && bin <68) b = bin-52-8;
+  else if (bin>78 && bin<=97) b =bin-52-12-8;
+  else if (bin>=119 && bin<=134) b = bin-(52+12+8+22);
   else 
     b=-99;
   return b;
@@ -238,9 +297,9 @@ int ttH_catIndex_2lss_MVA_CP_tH(int LepGood1_pdgId, int LepGood2_pdgId, float tt
   int b;
   b = -99;
   int bin = ttH_catIndex_2lss_MVA_CP(LepGood1_pdgId, LepGood2_pdgId, tth,  ttw, thq, rest, cp);
-  if (bin >=25 && bin <29) b = bin-10-8-6;
-  else if (bin>107 && bin<=119) b =bin-79-10-8-6;
-  else if (bin>196 && bin<=203) b = bin-(78+79+10+8+6);
+  if (bin >=66 && bin <69) b = bin-52-8-6;
+  else if (bin>97 && bin<=108) b =bin-(51+8+6+27);
+  else if (bin>134 && bin<=141) b = bin-(51+8+6+27+26);
   else 
     b=-99;
   return b;
@@ -624,6 +683,7 @@ int ttH_catIndex_3l_MVA(float ttH, float tH, float rest, int lep1_pdgId, int lep
   return -1;
 
 }
+
 
 int ttH_catIndex_3l_MVA_CP(float ttH, float tH, float rest, int lep1_pdgId, int lep2_pdgId, int lep3_pdgId, int nBMedium, float cp )
 {
