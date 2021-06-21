@@ -15,8 +15,8 @@ change: nBJetMedium40_Recl\b: nBJetMedium40_jesAbsolute_yearDown_Recl
 change: nBJetTight40_Recl\b: nBJetTight40_jesAbsolute_yearDown_Recl
 change: DNN_2lss_predictions_ttH\b: DNN_2lss_jesAbsolute_yearDown_predictions_ttH
 change: DNN_2lss_predictions_ttW\b: DNN_2lss_jesAbsolute_yearDown_predictions_ttW
-change: DNN_2lss_predictions_rest\b: DNN_2lss_jesAbsolute_yearDown_predictions_rest
-change: DNN_2lss_predictions_tH\b: DNN_2lss_jesAbsolute_yearDown_predictions_tH
+change: DNN_2lss_predictions_Rest\b: DNN_2lss_jesAbsolute_yearDown_predictions_Rest
+change: DNN_2lss_predictions_tHQ\b: DNN_2lss_jesAbsolute_yearDown_predictions_tHQ
 change: FwdJet1_pt_Recl\b: FwdJet1_pt_jesAbsolute_yearDown_Recl
 change: FwdJet1_eta_Recl\b: FwdJet1_eta_jesAbsolute_yearDown_Recl
 change: JetSel_Recl_pt\b: JetSel_Recl_pt_jesAbsolute_yearDown
@@ -36,4 +36,10 @@ change: BDThttTT_eventReco_Hj_score\b: BDThttTT_eventReco_Hj_score_jesAbsolute_y
 change: DNN_3l_predictions_ttH\b: DNN_3l_jesAbsolute_yearDown_predictions_ttH
 change: DNN_3l_predictions_rest\b: DNN_3l_jesAbsolute_yearDown_predictions_rest
 change: DNN_3l_predictions_tH\b: DNN_3l_jesAbsolute_yearDown_predictions_tH
+change: DNN_2lss1tau_predictions_ttH\b: DNN_2lss1tau_jesAbsolute_yearDown_predictions_ttH
+change: DNN_2lss1tau_predictions_rest\b: DNN_2lss1tau_jesAbsolute_yearDown_predictions_rest
+change: DNN_2lss1tau_predictions_tH\b: DNN_2lss1tau_jesAbsolute_yearDown_predictions_tH
+change: mvaCP_2lss1tau\b:mvaCP_2lss1tau_jesAbsolute_yearDown
+change: mvaCP_2lss\b:mvaCP_2lss_jesAbsolute_yearDown
+change: mvaCP_3l\b:mvaCP_3l_jesAbsolute_yearDown
 weight:1
