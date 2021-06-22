@@ -1,4 +1,4 @@
-incl_sigprompt : + ; IncludeMca="ttH-multilepton/mca-includes/mca-2lss-CP-new.txt", FakeRate='ttH-multilepton/frs-jecs/fr-HEM-up.txt'
+incl_sigprompt : + ; IncludeMca="ttH-multilepton/mca-includes/mca-2lss-CP-new.txt"
 incl_convs     : + ; IncludeMca="ttH-multilepton/mca-includes/mca-2lss-convs.txt"
 incl_datafakes  : + ; IncludeMca="ttH-multilepton/mca-includes/mca-data.txt", FakeRate="ttH-multilepton/fakeRate-2lss-frdata.txt", Label="Fakes", FillColor=ROOT.kBlack, FillStyle=3005, PostFix='_fakes'
 incl_promptsub : + ; IncludeMca="ttH-multilepton/mca-includes/mca-2lss-CP-new.txt", FakeRate="ttH-multilepton/fakeRate-2lss-frdata.txt", PostFix='_promptsub', AddWeight="-1"
