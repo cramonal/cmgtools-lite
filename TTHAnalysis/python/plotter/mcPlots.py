@@ -150,7 +150,7 @@ def doTinyCmsPrelim(textLeft="_default_",textRight="_default_",hasExpo=False,tex
     elif lumi > 3.54e-2: lumitext = "%.0f pb^{-1}" % (lumi*1000)
     elif lumi > 3.54e-3: lumitext = "%.1f pb^{-1}" % (lumi*1000)
     else               : lumitext = "%.2f pb^{-1}" % (lumi*1000)
-    lumitext = "%.1f fb^{-1}" % float(lumi)
+    lumitext = "%.0f fb^{-1}" % float(lumi)
     textLeft = textLeft.replace("%(lumi)",lumitext)
     textRight = textRight.replace("%(lumi)",lumitext)
     if textLeft not in ['', None]:
@@ -213,8 +213,11 @@ def doStackSignalNorm(pspec,pmap,individuals,extrascale=1.0,norm=True):
     else:
         sig = None
         if "signal" in pmap: sig = pmap["signal"].Clone(pspec.name+"_signal_norm")
+     
         else: 
+ 
             sigs = [pmap[x] for x in mca.listBackgrounds() if pmap.has_key(x) and pmap[x].Integral() > 0]
+
             sig = sigs[0].Clone(sigs.GetName()+"_norm")
         sig.SetFillStyle(0)
         sig.SetLineColor(206)
@@ -222,6 +225,7 @@ def doStackSignalNorm(pspec,pmap,individuals,extrascale=1.0,norm=True):
         if norm and sig.Integral() > 0:
             sig.Scale(total*extrascale/sig.Integral())
         sig.Draw("HIST SAME")
+
         return [sig]
 
 def doStackSigScaledNormData(pspec,pmap):
@@ -374,6 +378,38 @@ def doNormFit(pspec,pmap,mca,saveScales=False):
     ROOT.RooMsgService.instance().setGlobalKillBelow(gKill)
     return postfit
 
+def doVerticalLines(total, linesFile):
+    # First, read configuration from linesFile
+    import imp
+    lines = imp.load_source("lines",linesFile)
+    tot_bins = total.GetNbinsX()
+    for item in lines.items: #List of dictionaries with the input
+      if item["mode"] == "range":
+        print "Drawing...", item["name"], tot_bins, item["before"],item["after"]
+        if item["before"] != 1:
+          x = total.GetBinLowEdge(item["before"])
+          y1 = item["y1"]
+          y2 = item["y2"]
+          print "before", x,y1,x,y2
+          bef = ROOT.TLine(x,y1,x,y2)
+          bef.SetLineStyle(item["style"])
+          bef.SetLineWidth(item["widht"])
+          bef.SetLineColor(item["color"])
+          bef.Draw("same")
+        if item["after"] != tot_bins:
+          x = total.GetBinLowEdge(item["after"]+1)
+          y1 = item["y1"]
+          y2 = item["y2"]
+          print "after", x,y1,x,y2
+          aft = ROOT.TLine(x,y1,x,y2)
+          aft.SetLineStyle(item["style"])
+          aft.SetLineWidth(item["widht"])
+          aft.SetLineColor(item["color"])
+          aft.Draw("same")
+      if item["mode"] == "text":
+          tl = ROOT.TLatex(item["x"], item["y"], item["text"])
+          tl.Draw("same")
+
 def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOnRef=True,ratioNums="signal",ratioDen="background",ylabel="Data/pred.",yndiv=505,doWide=False,showStatTotLegend=False,textSize=0.035):
     numkeys = [ "data" ]
     if "data" not in pmap: 
@@ -449,6 +485,9 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     unityErr0.SetFillColor(ROOT.kBlue-7);
     unityErr0.SetMarkerStyle(1);
     unityErr0.SetMarkerColor(ROOT.kBlue-7);
+    if options.externalPostfitPlot:
+       unityErr0.SetFillColor(ROOT.kCyan);
+       unityErr0.SetMarkerColor(ROOT.kCyan);
     ROOT.gStyle.SetErrorX(0.5);
     unity.Draw("AXIS");
     if errorsOnRef:
@@ -507,14 +546,17 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     line.SetLineColor(58);
     line.Draw("L")
     for ratio in ratios:
-        ratio.Draw("E SAME" if ratio.ClassName() != "TGraphAsymmErrors" else "PZ SAME");
+        ratio.Draw("E SAME0" if ratio.ClassName() != "TGraphAsymmErrors" else "PZ SAME0");
     leg0 = ROOT.TLegend(0.12 if doWide else 0.2, 0.84, 0.25 if doWide else 0.45, 0.94)
     leg0.SetFillColor(0)
     leg0.SetShadowColor(0)
     leg0.SetLineColor(0)
     leg0.SetTextFont(42)
     leg0.SetTextSize(textSize*0.7/0.3)
-    leg0.AddEntry(unityErr0, "stat. unc.", "F")
+    
+    if options.externalPostfitPlot:
+       leg0.AddEntry(unityErr0, "total unc.", "F")
+    else: leg0.AddEntry(unityErr0, "stat. unc.", "F")
     if showStatTotLegend: leg0.Draw()
     leg1 = ROOT.TLegend(0.25 if doWide else 0.45, 0.84, 0.38 if doWide else 0.7, 0.94)
     leg1.SetFillColor(0)
@@ -524,6 +566,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     leg1.SetTextSize(textSize*0.7/0.3)
     leg1.AddEntry(unityErr, "total unc.", "F")
     if showStatTotLegend: leg1.Draw()
+    if not showStatTotLegend and options.externalPostfitPlot: leg0.Draw()
     global legendratio0_, legendratio1_
     legendratio0_ = leg0
     legendratio1_ = leg1
@@ -564,7 +607,7 @@ def doStatTests(total,data,test,legendCorner):
 
 
 legend_ = None;
-def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-2,cutoffSignals=True,mcStyle="F",legWidth=0.18,legBorder=True,signalPlotScale=None,totalError=None,header="",doWide=False,columns=1):
+def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-5,cutoffSignals=True,mcStyle="F",legWidth=0.18,legBorder=True,signalPlotScale=None,totalError=None,header="",doWide=False,columns=1, extralabel = ""):
         if (corner == None): return
         total = sum([x.Integral() for x in pmap.itervalues()])
         sigEntries = []; bgEntries = []
@@ -616,6 +659,10 @@ def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-2,cutoffSignals=True,
         for (plot,label,style) in sigEntries: entries.append((plot.raw(),label,style))
         for (plot,label,style) in  bgEntries: entries.append((plot.raw(),label,style))
         if totalError:  entries.append((totalError,"Total unc.","F"))
+        if extralabel:
+           leg0_object = ROOT.TObject()
+           leg0_object = 0
+           entries.append((leg0_object, extralabel , ""));
         nrows = int(ceil(len(entries)/float(columns)))
         for r in xrange(nrows):
             for c in xrange(columns):
@@ -669,7 +716,11 @@ class PlotMaker:
                 pspecs = matchspec + [ p for p in pspecs if p.name != self._options.preFitData ]
             for pspec in pspecs:
                 print "    plot: ",pspec.name
-                pmap = mca.getPlots(pspec,cut,makeSummary=True,closeTreeAfter=True)
+                if self._options.externalPostfitPlot != None: 
+                    pmap = mca.getPostFitPlots(self._options.externalPostfitPlot,pspec)
+                else:
+                    pmap = mca.getPlots(pspec,cut,makeSummary=True,closeTreeAfter=True)
+
                 #
                 # blinding policy
                 blind = pspec.getOption('Blinded','None') if 'data' in pmap else 'None'
@@ -740,12 +791,13 @@ class PlotMaker:
                     else:
                         if v.InheritsFrom("TH1"): v.SetDirectory(dir) 
                         dir.WriteTObject(v.raw())
-                #
+
                 self.printOnePlot(mca,pspec,pmap,
                                   xblind=xblind,
                                   makeCanvas=makeCanvas,
                                   outputDir=dir,
-                                  printDir=self._options.printDir+(("/"+subname) if subname else ""))
+                                  printDir=self._options.printDir+(("/"+subname) if subname else ""),
+                                  mytotal = pmap["total"] if self._options.externalPostfitPlot else None)
                 if getattr(mca,'_altPostFits',None):
                     roofit = roofitizeReport(pmap)
                     if self._options.processesToPeg == []:
@@ -966,21 +1018,22 @@ class PlotMaker:
                         doSpam(options.addspam, .68, .855, .9, .895, align=32, textSize=(0.045 if doRatio else 0.033)*options.topSpamSize)
                     else:
                         doSpam(options.addspam, .23, .855, .6, .895, align=12, textSize=(0.045 if doRatio else 0.033)*options.topSpamSize)
-                legendCutoff = pspec.getOption('LegendCutoff', 1e-5 if c1.GetLogy() else 1e-2)
+                legendCutoff = pspec.getOption('LegendCutoff', 1e-10 if c1.GetLogy() else 1e-10)
                 if plotmode == "norm": legendCutoff = 0 
                 if plotmode == "stack":
                     if options.noStackSig: mcStyle = ("L","F")
                     else:                  mcStyle = "F"
                 else: mcStyle = "L"
+
                 doLegend(pmap,mca,corner=pspec.getOption('Legend','TR'),
                                   cutoff=legendCutoff, mcStyle=mcStyle,
                                   cutoffSignals=not(options.showSigShape or options.showIndivSigShapes or options.showSFitShape), 
                                   textSize=( (0.045 if doRatio else 0.022) if options.legendFontSize <= 0 else options.legendFontSize ),
                                   legWidth=pspec.getOption('LegendWidth',options.legendWidth), legBorder=options.legendBorder, signalPlotScale=options.signalPlotScale,
                                   header=self._options.legendHeader if self._options.legendHeader else pspec.getOption("LegendHeader", ""),
-                                  doWide=doWide, totalError=totalError, columns = pspec.getOption('LegendColumns',options.legendColumns))
+                                  doWide=doWide, totalError=totalError, columns = pspec.getOption('LegendColumns',options.legendColumns), extralabel = self._options.printBestFit)
                 if self._options.doOfficialCMS:
-                    CMS_lumi.lumi_13TeV = "%.1f fb^{-1}" % self._options.lumi
+                    CMS_lumi.lumi_13TeV = "%.0f fb^{-1}" % self._options.lumi
                     CMS_lumi.extraText  = self._options.cmsprel
                     CMS_lumi.lumi_sqrtS = self._options.cmssqrtS
                     CMS_lumi.CMS_lumi(ROOT.gPad, 4, 0, -0.005 if doWide and doRatio else 0.01 if doWide else 0.05)
@@ -991,7 +1044,7 @@ class PlotMaker:
                     signorms = doStackSignalNorm(pspec,pmap,options.showIndivSigShapes or options.showIndivSigs,extrascale=options.signalPlotScale, norm=not options.showIndivSigs)
                     for signorm in signorms:
                         if outputDir: 
-                            signorm.SetDirectory(outputDir); outputDir.WriteTObject(signorm)
+                            signorm.SetDirectory(outputDir); outputDir.WriteTObject(signorm.raw())
                         reMax(total,signorm,islog,doWide=doWide)
                 if options.showDatShape: 
                     datnorm = doDataNorm(pspec,pmap)
@@ -1016,6 +1069,50 @@ class PlotMaker:
                                 if p2: p2.SetFillColor(ROOT.kYellow-10)
                                 break
                 if makeCanvas and outputDir: outputDir.WriteTObject(c1)
+                rdata,rnorm,rnorm2,rline = (None,None,None,None)
+                if options.vertLines:
+                    #doVerticalLines(total, options.vertLines)
+                    # First, read configuration from linesFile
+                    import imp
+                    lines = imp.load_source("lines",options.vertLines)
+                    tot_bins = total.GetNbinsX()
+                    bef = [] 
+                    aft = [] 
+                    texts=[]
+                    for item in lines.items: #List of dictionaries with the input
+                        if item["mode"] == "range":
+                            print "Drawing...", item["name"], tot_bins, item["before"],item["after"]
+                            if item["before"] != 1:
+                               x = total.GetBinLowEdge(item["before"])
+                               y1 = item["y1"]
+                               y2 = item["y2"]
+                               print "before", x,y1,x,y2
+                               bef.append(ROOT.TLine(x,y1,x,y2))
+                               bef[-1].SetLineStyle(item["style"])
+                               bef[-1].SetLineWidth(item["widht"])
+                               bef[-1].SetLineColor(item["color"])
+                               bef[-1].Draw("same")
+                            if item["after"] != tot_bins:
+                               x = total.GetBinLowEdge(item["after"]+1)
+                               y1 = item["y1"]
+                               y2 = item["y2"]
+                               print "after", x,y1,x,y2
+                               aft.append(ROOT.TLine(x,y1,x,y2))
+                               aft[-1].SetLineStyle(item["style"])
+                               aft[-1].SetLineWidth(item["widht"])
+                               aft[-1].SetLineColor(item["color"])
+                               aft[-1].Draw("same")
+                        if item["mode"] == "text" and not("forceRatio" in item.keys()):
+                            print "Plotting in main...", item["name"]
+                            texts.append(ROOT.TLatex(item["x"], item["y"], item["text"]))
+                            if "angle" in item.keys(): texts[-1].SetTextAngle(item["angle"])
+                            texts[-1].SetTextSize(item["size"])
+                            if "font" in item.keys(): texts[-1].SetTextFont(item["font"])
+                            else: texts[-1].SetTextFont(42)
+                            if "color" in item.keys(): texts[-1].SetTextColor(item["color"])
+                            else: texts[-1].SetTextColor(ROOT.kBlue+3)
+                            texts[-1].Draw("same")
+
                 rdata,rnorm,rnorm2,rline = (None,None,None,None)
                 if doRatio:
                     p2.cd(); 
@@ -1194,10 +1291,11 @@ def addPlotMakerOptions(parser, addAlsoMCAnalysis=True):
     parser.add_option("--legendColumns", dest="legendColumns", type="int", default=1, help="Number of columns in the legend")
     parser.add_option("--ratioOffset", dest="ratioOffset", type="float", default=0.0, help="Put an offset between ratio and main pad")
     parser.add_option("--noCms", dest="doOfficialCMS", action="store_false", default=True, help="Use official tool to write CMS spam")
+    parser.add_option("--vertLines", dest="vertLines", type="string", default=None, help="Use this lines file to add additional lines and text to the plot (experimental)")
     parser.add_option("--cmsprel", dest="cmsprel", type="string", default="Preliminary", help="Additional text (Simulation, Preliminary, Internal)")
     parser.add_option("--cmssqrtS", dest="cmssqrtS", type="string", default="13 TeV", help="Sqrt of s to be written in the official CMS text.")
     parser.add_option("--printBin", dest="printBinning", type="string", default=None, help="Write 'Events/xx' instead of 'Events' on the y axis")
-
+    parser.add_option("--printBF", dest="printBestFit", type="string", default=None, help="Print BF in postfit plots")
 if __name__ == "__main__":
     from optparse import OptionParser
     parser = OptionParser(usage="%prog [options] mc.txt cuts.txt plots.txt")

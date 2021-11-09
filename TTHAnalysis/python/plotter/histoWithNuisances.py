@@ -5,6 +5,7 @@ from array import array
 import ROOT
 
 def _cloneNoDir(hist,name=''):
+
     ret = hist.Clone(name)
     ret.SetDirectory(ROOT.nullptr)
     return ret
@@ -46,6 +47,80 @@ def cropNegativeBins(histo,threshold=0.):
                     for by in xrange(0,histo.GetNbinsY()+2):
                         for bz in xrange(0,histo.GetNbinsZ()+2):
                             if histo.GetBinContent(bx,by,bz) < threshold: histo.SetBinContent(bx,by,bz, threshold)
+
+def buildVariationsFromAlternativesWithEnvelope(uncfile, ret):
+    for var in uncfile.uncertainty():
+        if var.unc_type != 'altSampleEnv': continue # now only adding the alternative samples
+        thelist = var.args[0].replace("[", "").replace("]", "").replace("'", "").split("\,")
+        hasBeenApplied = False
+        toremove = []
+        
+        for k, p in ret.iteritems():
+            if not var.procmatch().match(k): continue
+
+            if hasBeenApplied:
+                raise RuntimeError("FATAL: variation %s is being applied to at least two processes"%var.name)
+
+            if not isinstance(thelist, list):
+                print thelist
+                raise RuntimeError("FATAL: the argument given for the envelope uncertainty calculation with alternative samples for the variation {var} is not a list of samples.".format(var = var.name))
+
+            #if len(var.args) < 2:
+                #raise RuntimeError("FATAL: more arguments than two provided for the envelope uncertainty calculation with alternative samples for the variation {var}.".format(var = var.name))
+            
+            up   = _cloneNoDir( p.central, var.name + 'Up' )
+            down = _cloneNoDir( p.central, var.name + 'Down' )
+
+            for ibin in range(1, p.central.GetNbinsX() + 1):
+                maxUp = p.central.GetBinContent( ibin )
+                minDn = p.central.GetBinContent( ibin )
+                
+                for samp in thelist:
+                    cont = ret[samp].raw().GetBinContent(ibin)
+                    if (cont - maxUp > 0): maxUp = cont
+                    if (cont - minDn < 0): minDn = cont
+
+                up.SetBinContent( ibin, maxUp )
+                down.SetBinContent( ibin, minDn )
+
+            if var.args[1].lower() == "symm":
+                for ibin in range(1, p.central.GetNbinsX() + 1):
+                    if   up.GetBinContent(ibin) == p.central.GetBinContent(ibin):
+                        up.SetBinContent(ibin, 2 * p.central.GetBinContent(ibin) - down.GetBinContent(ibin))
+                    elif down.GetBinContent(ibin) == p.central.GetBinContent(ibin):
+                        down.SetBinContent(ibin, 2 * p.central.GetBinContent(ibin) - up.GetBinContent(ibin))
+                    else:
+                        tmpvar = (up.GetBinContent(ibin) - down.GetBinContent(ibin)) / 2
+                        up.SetBinContent(ibin,   p.central.GetBinContent(ibin) + tmpvar)
+                        down.SetBinContent(ibin, p.central.GetBinContent(ibin) - tmpvar)
+
+            p.addVariation(var.name, 'up'  , up)
+            p.addVariation(var.name, 'down', down)
+
+            toremove.extend( [el for el in thelist])
+            hasBeenApplied = True
+
+        for rem in toremove:
+            if rem in ret: ret.pop(rem)
+
+def buildVariationsFromAlternative( uncfile, ret):
+    for var in uncfile.uncertainty():
+        if var.unc_type != 'altSample': continue # now only adding the alternative samples
+        hasBeenApplied=False
+        toremove=[]
+        for k,p in ret.iteritems(): 
+            if not var.procmatch().match(k): continue
+            if hasBeenApplied:
+                raise RuntimeError("variation %s is being applied to at least two processes"%var.name)
+            if var.args[0] not in ret or var.args[1] not in ret:
+                raise RuntimeError("Alternative sample (%s,%s) has not been processed, available samples are %s"%(var.args[0], var.args[1], ','.join(k for k in ret)))
+            p.addVariation( var.name, 'up'  , ret[var.args[0]].raw())
+            p.addVariation( var.name, 'down', ret[var.args[1]].raw())
+            toremove.extend( [var.args[0], var.args[1]])
+            hasBeenApplied=True
+        #print toremove
+        for rem in toremove: 
+            if rem in ret: ret.pop(rem)
 
 def _isNullHistogram(h):
     if h.Integral() != 0: return False
@@ -736,6 +811,7 @@ class HistoWithNuisances:
             for hi in h.variations[v]: hi.SetDirectory(None)
         if self.nominal == self.central:
             h.nominal = h.central
+            #h.nominal = h.centralHistoWithNuisances
         else:
             h.nominal = _getHistoInRangeNoDir(self.nominal, name+"_nominal", bin1,bin2)
             h.nominal.SetDirectory(None)

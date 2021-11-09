@@ -15,6 +15,7 @@ class Uncertainty:
         self._binpattern = binmatch
         self._procmatch = re.compile(procmatch+'$')
         self._binmatch = re.compile(binmatch+'$')
+        self.binmatchstr = binmatch
         self.unc_type = unc_type
         self.args = list(more_args) if more_args else []
         self.extra = dict(extra) if extra else {}
@@ -72,7 +73,16 @@ class Uncertainty:
             if 'FakeRates' not in self.extra: 
                 raise RuntimeError("A set of FakeRates are needed for envelope")
             self.fakerate = [ FakeRate( fr, loadFilesNow=False, year=self._options.year) for fr in self.extra['FakeRates'] ]
-
+        elif self.unc_type=='altSample':
+            if len(self.args) != 2: 
+                raise RuntimeError("altSample requires exactly two arguments")
+            if self.binmatchstr != ".*":
+                raise RuntimeError("altSample affects all bins by construction")
+        elif self.unc_type=='altSampleEnv':
+            if len(self.args) < 1:
+                raise RuntimeError("altSampleEnv requires at least one argument")
+            if self.binmatchstr != ".*":
+                raise RuntimeError("altSample affects all bins by construction")
 
         elif self.unc_type=='none':
             pass
@@ -123,6 +133,9 @@ class Uncertainty:
         h = central.Clone('');
         h.Multiply(h)
         h.Divide(up)
+        for i in range(1,central.GetNbinsX()+1):
+            if not up.GetBinContent(i):
+                h.SetBinContent(i, 2*central.GetBinContent(i))
         return h
     def apply_norm_up(self,results):
         return self.apply_norm('up',results)
