@@ -1,0 +1,127 @@
+#sm
+ttH_SM_hww+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[11]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10
+ttH_SM_hzz+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[11]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10
+ttH_SM_htt+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[11]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10
+ttH_SM_hmm+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[11]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==13); FillColor=ROOT.kOrange+10
+ttH_SM_hzg+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[11]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==22); FillColor=ROOT.kOrange+10
+
+#ttH CP odd
+ttH_CPodd_hww+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[59]*(9./4)   :LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10
+ttH_CPodd_hzz+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[59]*(9./4)   :LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10
+ttH_CPodd_htt+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[59]*(9./4)   :LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10
+ttH_CPodd_hmm+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[59]*(9./4)   :LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==13); FillColor=ROOT.kOrange+10
+ttH_CPodd_hzg+ : TTH_ctcvcp_new  : xsec*LHEReweightingWeight[59]*(9./4)   :LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==22); FillColor=ROOT.kOrange+10
+
+
+
+#tHq CP odd 
+tHq_CPodd_hww+ :THQ_ctcvcp_unskimmed  : 0.979917955940891*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10,genSumWeightName="genEventSumw", years= "2016\,2017", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_CPodd_hzz+ : THQ_ctcvcp_unskimmed  : 0.979917955940891*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10,genSumWeightName="genEventSumw", years= "2016\,2017", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_CPodd_htt+ : THQ_ctcvcp_unskimmed  : 0.979917955940891*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10,genSumWeightName="genEventSumw", years= "2016\,2017", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_CPodd_hww+ :THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2  : 0.979917955940891*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10,genSumWeightName="genEventSumw", years= "2018", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_CPodd_hzz+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2 : 0.979917955940891*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10,genSumWeightName="genEventSumw", years= "2018", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_CPodd_htt+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2  : 0.979917955940891*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10,genSumWeightName="genEventSumw", years= "2018", FriendsSimple="{P}/A_thqweights_newmodel/"
+
+#thq SM
+tHq_SM_hww+ : THQ_ctcvcp_unskimmed  : 0.979917955940891*LHEReweightingWeight[11] : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); genSumWeightName="genEventSumw", years= "2016\,2017"
+tHq_SM_hzz+ : THQ_ctcvcp_unskimmed  : 0.979917955940891*LHEReweightingWeight[11]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); genSumWeightName="genEventSumw", years= "2016\,2017"
+tHq_SM_htt+ : THQ_ctcvcp_unskimmed  : 0.979917955940891*LHEReweightingWeight[11]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); genSumWeightName="genEventSumw", years= "2016\,2017"
+tHq_SM_hww+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2  : 0.979917955940891*LHEReweightingWeight[11] : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); genSumWeightName="genEventSumw", years= "2018"
+tHq_SM_hzz+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2  : 0.979917955940891*LHEReweightingWeight[11]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); genSumWeightName="genEventSumw", years= "2018"
+tHq_SM_htt+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2  : 0.979917955940891*LHEReweightingWeight[11]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); genSumWeightName="genEventSumw", years= "2018"
+
+#thq  kv=1 kt =0
+tHq_kV_1_kt_0_hww+ : THQ_ctcvcp_unskimmed  : 0.979917955940891*LHEReweightingWeight[7]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017"
+tHq_kV_1_kt_0_hzz+ : THQ_ctcvcp_unskimmed  : 0.979917955940891*LHEReweightingWeight[7]   : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017"
+tHq_kV_1_kt_0_htt+ : THQ_ctcvcp_unskimmed  : 0.979917955940891*LHEReweightingWeight[7]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017"
+tHq_kV_1_kt_0_hww+ :THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2   : 0.979917955940891*LHEReweightingWeight[7]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018"
+tHq_kV_1_kt_0_hzz+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2  : 0.979917955940891*LHEReweightingWeight[7]   : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018"
+tHq_kV_1_kt_0_htt+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2   : 0.979917955940891*LHEReweightingWeight[7]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018"
+
+#thq   kv=0 kt=1
+tHq_kV_0_kt_1_hww+ : THQ_ctcvcp_unskimmed  :0.979917955940891*weight_kV_0p00_kt_1p00.dat  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017" , FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_kV_0_kt_1_hzz+ : THQ_ctcvcp_unskimmed  :   0.979917955940891*weight_kV_0p00_kt_1p00.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017" , FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_kV_0_kt_1_htt+ : THQ_ctcvcp_unskimmed  :   0.979917955940891*weight_kV_0p00_kt_1p00.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017" , FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_kV_0_kt_1_hww+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2  :0.979917955940891*weight_kV_0p00_kt_1p00.dat  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018" , FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_kV_0_kt_1_hzz+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2  :   0.979917955940891*weight_kV_0p00_kt_1p00.dat   : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHq_kV_0_kt_1_htt+ : THQ_ctcvcp_unskimmed_0+THQ_ctcvcp_unskimmed_1+THQ_ctcvcp_unskimmed_2  :   0.979917955940891*weight_kV_0p00_kt_1p00.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018", FriendsSimple="{P}/A_thqweights_newmodel/"
+
+#tHW CP odd
+tHW_CPodd_hww+ :THW_ctcvcp_unskimmed  : 0.14463633838146642*weight_CP_odd.dat  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_CPodd_hzz+ : THW_ctcvcp_unskimmed  :   0.14463633838146642*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_CPodd_htt+ : THW_ctcvcp_unskimmed  :   0.14463633838146642*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_CPodd_hww+ :THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1  : 0.14463633838146642*weight_CP_odd.dat  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_CPodd_hzz+ : THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1  :   0.14463633838146642*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018", FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_CPodd_htt+ :THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1  :   0.14463633838146642*weight_CP_odd.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018", FriendsSimple="{P}/A_thqweights_newmodel/"
+
+tHW_SM_hww+ : THW_ctcvcp_unskimmed  : 0.14463633838146642*LHEReweightingWeight[11]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017"
+tHW_SM_hzz+ : THW_ctcvcp_unskimmed  : 0.14463633838146642*LHEReweightingWeight[11]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017"
+tHW_SM_htt+ : THW_ctcvcp_unskimmed  : 0.14463633838146642*LHEReweightingWeight[11]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017"
+tHW_SM_hww+ : THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1  : 0.14463633838146642*LHEReweightingWeight[11]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018"
+tHW_SM_hzz+ : THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1  : 0.14463633838146642*LHEReweightingWeight[11]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018"
+tHW_SM_htt+ : THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1 : 0.14463633838146642*LHEReweightingWeight[11]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018"
+
+#thw  kv=1 kt =0
+tHW_kV_1_kt_0_hww+ :THW_ctcvcp_unskimmed  :  0.14463633838146642*LHEReweightingWeight[7]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017"
+tHW_kV_1_kt_0_hzz+ : THW_ctcvcp_unskimmed  :  0.14463633838146642*LHEReweightingWeight[7]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017"
+tHW_kV_1_kt_0_htt+ : THW_ctcvcp_unskimmed  :  0.14463633838146642*LHEReweightingWeight[7]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017"
+tHW_kV_1_kt_0_hww+ :THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1   :  0.14463633838146642*LHEReweightingWeight[7]  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018"
+tHW_kV_1_kt_0_hzz+ : THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1   :  0.14463633838146642*LHEReweightingWeight[7]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018"
+tHW_kV_1_kt_0_htt+ : THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1  :  0.14463633838146642*LHEReweightingWeight[7]    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018"
+
+
+#thw   kv=0 kt=1
+tHW_kV_0_kt_1_hww+ : THW_ctcvcp_unskimmed  :0.14463633838146642*weight_kV_0p00_kt_1p00.dat  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017" , FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_kV_0_kt_1_hzz+ : THW_ctcvcp_unskimmed   :   0.14463633838146642*weight_kV_0p00_kt_1p00.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017" , FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_kV_0_kt_1_htt+ : THW_ctcvcp_unskimmed  :   0.14463633838146642*weight_kV_0p00_kt_1p00.dat   : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2016\,2017" , FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_kV_0_kt_1_hww+ : THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1  :0.14463633838146642*weight_kV_0p00_kt_1p00.dat  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==24); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018" , FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_kV_0_kt_1_hzz+ : THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1   :   0.14463633838146642*weight_kV_0p00_kt_1p00.dat    : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==23); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018" , FriendsSimple="{P}/A_thqweights_newmodel/"
+tHW_kV_0_kt_1_htt+ : THW_ctcvcp_unskimmed_0+THW_ctcvcp_unskimmed_1  :   0.14463633838146642*weight_kV_0p00_kt_1p00.dat   : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  && (GenHiggsDecayMode==15); FillColor=ROOT.kOrange+10, genSumWeightName="genEventSumw", years= "2018" , FriendsSimple="{P}/A_thqweights_newmodel/"
+
+
+qqH_hzz+: GGHZZ4L_new : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9
+
+ZH_hww+ : VHToNonbb : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0) * (GenHiggsDecayMode==24) *(VHisZH==1) ; FillColor=ROOT.kAzure-9, FriendsSimple="{P}/0_VHsplitter/"
+ZH_hzz+ : VHToNonbb : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0) * (GenHiggsDecayMode==23) *(VHisZH==1) ; FillColor=ROOT.kAzure-9, FriendsSimple="{P}/0_VHsplitter/"
+ZH_htt+ : VHToNonbb : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0) * (GenHiggsDecayMode==15) *(VHisZH==1) ; FillColor=ROOT.kAzure-9, FriendsSimple="{P}/0_VHsplitter/"
+
+WH_hww+ : VHToNonbb : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0) * (GenHiggsDecayMode==24) *(VHisZH!=1) ; FillColor=ROOT.kAzure-9, FriendsSimple="{P}/0_VHsplitter/"
+WH_hzz+ : VHToNonbb : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0) * (GenHiggsDecayMode==23) *(VHisZH!=1) ; FillColor=ROOT.kAzure-9, FriendsSimple="{P}/0_VHsplitter/"
+WH_htt+ : VHToNonbb : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0) * (GenHiggsDecayMode==15) *(VHisZH!=1) ; FillColor=ROOT.kAzure-9, FriendsSimple="{P}/0_VHsplitter/"
+
+HH : GluGluToHHTo4Tau   : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0; FillColor=ROOT.kAzure-9, years="2016\,2017"
+HH : GluGluToHHTo2V2Tau : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0; FillColor=ROOT.kAzure-9, years="2017\,2018"
+HH : GluGluToHHTo4V     : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0; FillColor=ROOT.kAzure-9, years="2017"
+
+TTWW	: TTWW : 0.006981 : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kGreen-5, Label="ttWW  "
+
+TTW     : TTWToLNu_fxfx : 0.1960 : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ;  FillColor=ROOT.kGreen-5, Label="ttW   ", years="2016\,2018"
+TTW     : TTWToLNu_fxfx+TTWToLNu_fxfx_PS : 0.1960 : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0;  FillColor=ROOT.kGreen-5, Label="ttW   ", years="2017"
+TTW     : TTWJetsToLNu_EWK_5f_NLO : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kGreen-5, Label="ttW "
+
+TTZ     : TTZToLLNuNu_amc : 0.281 : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  ;  FillColor=ROOT.kSpring+2, Label="ttZ ", years="2016\,2018"
+TTZ     : TTZToLLNuNu_amc+TTZToLLNuNu_amc_PS : 0.281 : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0  ;  FillColor=ROOT.kSpring+2, Label="ttZ   ", years="2017"
+TTZ     : TTZToLLNuNu_m1to10 : 0.082 : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ;  FillColor=ROOT.kSpring+2
+TTZ	: TTJets_DiLepton : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kSpring+2
+TTZ   	: TTJets_SingleLeptonFromT : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kSpring+2
+TTZ   	: TTJets_SingleLeptonFromTbar : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kSpring+2
+
+ZZ: ZZTo4L : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ;  FillColor=ROOT.kViolet-3
+ZZ: DYJetsToLL_M10to50_LO : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kViolet-3
+ZZ: DYJetsToLL_M50 : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kViolet-3
+
+Rares: WZTo3LNu_fxfx : 4.43 : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ;  FillColor=ROOT.kAzure-9
+Rares: TTTT : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9, years="2016\,2018"
+Rares: TTTT+TTTT_PS : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9, years="2017"
+#Rares: TTTW : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9
+#Rares: TTWH : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9
+Rares: TZQToLL : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9, years="2017\,2018"
+Rares: TZQToLL+TZQToLL_PS : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9, years= "2016"
+Rares: tWll : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9
+Rares: WW_DPS : 0.1729 : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9, years="2017\,2018"
+Rares: WpWpJJ : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9
+Rares: WWW_ll : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9, years="2017\,2018"
+Rares: WWZ : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9
+Rares: WZG : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9, years="2017\,2018"
+Rares: WZZ : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9
+Rares: ZZZ : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && LepGood4_mcMatchId!=0 ; FillColor=ROOT.kAzure-9

@@ -17,29 +17,19 @@ $alias : FRData : data_fakes|.*_promptsub
 $alias : FRAll  : data_fakes|.*_promptsub|TT_FR_QCD
 
 ### Uncertainties
+
+
 # lumi from https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#LumiComb
-lumi_13TeV_2016		: $PromptFromMC : .* : normSymm : 1.022; year="2016"
+lumi_13TeV_2016		: $PromptFromMC : .* : normSymm : 1.010; year="2016"
 lumi_13TeV_2017		: $PromptFromMC : .* : normSymm : 1.020; year="2017"
 lumi_13TeV_2018		: $PromptFromMC : .* : normSymm : 1.015; year="2018"
 
-lumi_13TeV_XY		: $PromptFromMC : .* : normSymm : 1.009; year="2016"
-lumi_13TeV_XY		: $PromptFromMC : .* : normSymm : 1.008; year="2017"
-lumi_13TeV_XY		: $PromptFromMC : .* : normSymm : 1.020; year="2018"
+lumi_13TeV_correlated   : $PromptFromMC : .* : normSymm : 1.006; year="2016"
+lumi_13TeV_correlated   : $PromptFromMC : .* : normSymm : 1.009; year="2017"
+lumi_13TeV_correlated   : $PromptFromMC : .* : normSymm : 1.020; year="2018"
 
-lumi_13TeV_LS		: $PromptFromMC : .* : normSymm : 1.003; year="2017"
-lumi_13TeV_LS		: $PromptFromMC : .* : normSymm : 1.002; year="2018"
-
-lumi_13TeV_BBD		: $PromptFromMC : .* : normSymm : 1.004; year="2016" 
-lumi_13TeV_BBD		: $PromptFromMC : .* : normSymm : 1.004; year="2017" 
-
-lumi_13TeV_DB 		: $PromptFromMC : .* : normSymm : 1.005; year="2016"
-lumi_13TeV_DB 		: $PromptFromMC : .* : normSymm : 1.005; year="2017" 
-
-lumi_13TeV_BCC 		: $PromptFromMC : .* : normSymm : 1.003; year="2017"
-lumi_13TeV_BCC 		: $PromptFromMC : .* : normSymm : 1.002; year="2018" 
-
-lumi_13TeV_GS 		: $PromptFromMC : .* : normSymm : 1.004; year="2016"
-lumi_13TeV_GS 		: $PromptFromMC : .* : normSymm : 1.001; year="2017"
+lumi_13TeV_1718         : $PromptFromMC : .* : normSymm : 1.006; year="2017"
+lumi_13TeV_1718         : $PromptFromMC : .* : normSymm : 1.002; year="2018"
 
 
 # lepton efficiencies
@@ -271,8 +261,8 @@ QCDscale_WH    : $WH   : .* : normAsymm : 0.950 : 1.070
 QCDscale_ZH    : $ZH   : .* : normAsymm : 0.962 : 1.031
 pdf_Higgs_ttH  : $ttH  : .* : normSymm : 1.036
 pdf_gg         : TTZ   : .* : normSymm : 0.966
-pdf_qg	       : $tHq  : .* : normSymm : 1.01
-pdf_qg	       : $tHW  : .* : normSymm : 1.027
+pdf_Higgs_tHq  : $tHq  : .* : normSymm : 1.01
+pdf_Higgs_tHW  : $tHW  : .* : normSymm : 1.027
 pdf_qqbar      : TTW   : .* : normSymm : 1.04
 pdf_TTWW       : TTWW  : .* : normSymm : 1.03
 pdf_WH	       : $WH   : .* : normSymm : 1.019
@@ -365,11 +355,15 @@ CMS_ttHl_thu_shape_ZZ : ZZ : .* : envelope ; FakeRates=['ttH-multilepton/frs-sca
 CMS_ttHl_thu_shape_ttH : $ttH : .* : envelope; FakeRates=['ttH-multilepton/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'ttH-multilepton/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_0p5.txt']
 CMS_ttHl_thu_shape_ttZ : TTZ  : .* : envelope; FakeRates=['ttH-multilepton/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'ttH-multilepton/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
 CMS_ttHl_thu_shape_ttW : TTW  : .* : envelope; FakeRates=['ttH-multilepton/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'ttH-multilepton/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
-CMS_ttHl_thu_shape_tHW : $tHW : .* : envelope; FakeRates=['ttH-multilepton/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'ttH-multilepton/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_0p5.txt']
-CMS_ttHl_thu_shape_tHq : $tHq : .* : envelope; FakeRates=['ttH-multilepton/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'ttH-multilepton/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_0p5.txt']
+CMS_ttHl_thu_shape_tHW : $tHW : .* : envelope; FakeRates=['ttH-multilepton/frs-scales/fr-muR_2p0_muF_1p0_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_1p0_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_2p0_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_0p5_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_2p0_muF_2p0_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_0p5_thq.txt']
+CMS_ttHl_thu_shape_tHq : $tHq : .* : envelope; FakeRates=['ttH-multilepton/frs-scales/fr-muR_2p0_muF_1p0_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_1p0_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_2p0_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_1p0_muF_0p5_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_2p0_muF_2p0_thq.txt'\,'ttH-multilepton/frs-scales/fr-muR_0p5_muF_0p5_thq.txt']
 
 
-
+Diff_NLO_LO : ttH_SM_hww: .* :  altSampleEnv : ['syst_ttH_NLO_hww'] : symm
+Diff_NLO_LO : ttH_SM_htt: .* :  altSampleEnv : ['syst_ttH_NLO_htt'] : symm
+Diff_NLO_LO : ttH_SM_hmm: .* :  altSampleEnv : ['syst_ttH_NLO_hmm'] : symm
+Diff_NLO_LO : ttH_SM_hzz: .* :  altSampleEnv : ['syst_ttH_NLO_hzz'] : symm
+Diff_NLO_LO : ttH_SM_hzg: .* :  altSampleEnv : ['syst_ttH_NLO_hzg'] : symm
 
 
 # Charge flip uncertainty

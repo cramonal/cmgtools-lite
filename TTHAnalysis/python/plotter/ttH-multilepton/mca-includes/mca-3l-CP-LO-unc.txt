@@ -1,0 +1,5 @@
+syst_ttH_NLO_hww      : TTHnobb_fxfx :0.5071*0.418: LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==24);  FillColor=ROOT.kCyan
+syst_ttH_NLO_hzz      : TTHnobb_fxfx :0.5071*0.418: LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==23);  FillColor=ROOT.kCyan
+syst_ttH_NLO_htt      : TTHnobb_fxfx :0.5071*0.418: LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==15);  FillColor=ROOT.kCyan
+syst_ttH_NLO_hmm      : TTHnobb_fxfx :0.5071*0.418: LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==13);  FillColor=ROOT.kCyan
+syst_ttH_NLO_hzg      : TTHnobb_fxfx :0.5071*0.418: LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0  && (GenHiggsDecayMode==22);  FillColor=ROOT.kCyan
