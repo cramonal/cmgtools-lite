@@ -21,8 +21,8 @@ REGION=sys.argv[3]
 OTHER=sys.argv[4:] if len(sys.argv) > 4 else ''
 
 if   YEAR in '2016': LUMI="36.33"
-elif YEAR in '2017': LUMI="41.4"
-elif YEAR in '2018': LUMI="59.7"
+elif YEAR in '2017': LUMI="41.5"
+elif YEAR in '2018': LUMI="59.8"
 else:
     raise RuntimeError("Wrong year %s"%YEAR)
 
