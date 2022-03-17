@@ -19,6 +19,11 @@ tauveto: nTauTight==0
 jet_bjet: (nJet25>=3 && (nBJetLoose25 >= 2 || nBJetMedium25 >= 1)) || (nBJetMedium25 >= 1 && (nJet25+nFwdJet-nBJetLoose25) > 0)
 
 
+ttHnode: DNN_2lss_predictions_ttH>DNN_2lss_predictions_Rest &&  DNN_2lss_predictions_ttH>DNN_2lss_predictions_tHQ &&  DNN_2lss_predictions_ttH>DNN_2lss_predictions_ttW; Disable=True
+ttWnode:DNN_2lss_predictions_ttW>DNN_2lss_predictions_Rest &&  DNN_2lss_predictions_ttW>DNN_2lss_predictions_tHQ &&  DNN_2lss_predictions_ttW>DNN_2lss_predictions_ttH; Disable=True
+tHnode: DNN_2lss_predictions_tHQ>DNN_2lss_predictions_Rest &&  DNN_2lss_predictions_tHQ>DNN_2lss_predictions_ttH &&  DNN_2lss_predictions_tHQ>DNN_2lss_predictions_ttW; Disable=True
+Restnode: DNN_2lss_predictions_Rest>DNN_2lss_predictions_ttH &&  DNN_2lss_predictions_Rest>DNN_2lss_predictions_tHQ &&  DNN_2lss_predictions_Rest>DNN_2lss_predictions_ttW; Disable=True
+
 # some cuts that are off by default but can be turned on with -E
 tightMVA070: LepGood1_mvaTTH>0.70 && LepGood2_mvaTTH>0.70 ; Disable=True
 tightMVA075: LepGood1_mvaTTH>0.75 && LepGood2_mvaTTH>0.75 ; Disable=True

@@ -101,7 +101,7 @@ def getDataPoissonErrors(h, drawZeroBins=False, drawXbars=False):
     ret.SetName(h.GetName()+"_graph")
     for i,((x,y),(EXlow,EXhigh,EYlow,EYhigh)) in enumerate(zip(points,errors)):
         ret.SetPoint(i, x, y)
-        ret.SetPointError(i, EXlow,EXhigh,EYlow,EYhigh)
+        ret.SetPointError(i, 0.,0.,EYlow,EYhigh)
     ret.SetLineWidth(h.GetLineWidth())
     ret.SetLineColor(h.GetLineColor())
     ret.SetLineStyle(h.GetLineStyle())
@@ -438,13 +438,18 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     for numkey in numkeys:
         if hasattr(pmap[numkey], 'poissonGraph'):
             ratio = pmap[numkey].poissonGraph.Clone("data_div"); 
+            
             for i in xrange(ratio.GetN()):
                 x    = ratio.GetX()[i]
                 div  = total.GetBinContent(total.GetXaxis().FindBin(x))
                 ratio.SetPoint(i, x, ratio.GetY()[i]/div if div > 0 else 0)
-                ratio.SetPointError(i, ratio.GetErrorXlow(i), ratio.GetErrorXhigh(i), 
+                #ratio.SetPointError(i, ratio.GetErrorXlow(i), ratio.GetErrorXhigh(i), 
+                #                       ratio.GetErrorYlow(i)/div  if div > 0 else 0, 
+                #                       ratio.GetErrorYhigh(i)/div if div > 0 else 0)
+                ratio.SetPointError(i, 0, 0, 
                                        ratio.GetErrorYlow(i)/div  if div > 0 else 0, 
                                        ratio.GetErrorYhigh(i)/div if div > 0 else 0) 
+
         else:
             ratio = pmap[numkey].Clone("data_div"); 
             ratio.Divide(total.raw())
@@ -486,9 +491,11 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     unityErr0.SetMarkerStyle(1);
     unityErr0.SetMarkerColor(ROOT.kBlue-7);
     if options.externalPostfitPlot:
-       unityErr0.SetFillColor(ROOT.kCyan);
-       unityErr0.SetMarkerColor(ROOT.kCyan);
-    ROOT.gStyle.SetErrorX(0.5);
+       unityErr.SetFillColor(0);
+       unityErr0.SetFillColor(1);
+       unityErr0.SetFillStyle(3013);
+    #ROOT.gStyle.SetErrorX(0.5);
+    ROOT.gStyle.SetErrorX(0);
     unity.Draw("AXIS");
     if errorsOnRef:
         unityErr.Draw("E2");
@@ -540,11 +547,12 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
         blist = binlabels.split(",")
         for i in range(1,unity.GetNbinsX()+1): 
             unity.GetXaxis().SetBinLabel(i,blist[i-1]) 
-    #$ROOT.gStyle.SetErrorX(0.0);
+    ROOT.gStyle.SetErrorX(0.0);
     line = ROOT.TLine(unity.GetXaxis().GetXmin(),1,unity.GetXaxis().GetXmax(),1)
     line.SetLineWidth(2);
     line.SetLineColor(58);
     line.Draw("L")
+    
     for ratio in ratios:
         ratio.Draw("E SAME0" if ratio.ClassName() != "TGraphAsymmErrors" else "PZ SAME0");
     leg0 = ROOT.TLegend(0.12 if doWide else 0.2, 0.84, 0.25 if doWide else 0.45, 0.94)
@@ -553,10 +561,8 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     leg0.SetLineColor(0)
     leg0.SetTextFont(42)
     leg0.SetTextSize(textSize*0.7/0.3)
-    
-    if options.externalPostfitPlot:
-       leg0.AddEntry(unityErr0, "total unc.", "F")
-    else: leg0.AddEntry(unityErr0, "stat. unc.", "F")
+
+    if not options.externalPostfitPlot:leg0.AddEntry(unityErr0, "stat. unc.", "F")
     if showStatTotLegend: leg0.Draw()
     leg1 = ROOT.TLegend(0.25 if doWide else 0.45, 0.84, 0.38 if doWide else 0.7, 0.94)
     leg1.SetFillColor(0)
@@ -565,8 +571,9 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     leg1.SetTextFont(42)
     leg1.SetTextSize(textSize*0.7/0.3)
     leg1.AddEntry(unityErr, "total unc.", "F")
-    if showStatTotLegend: leg1.Draw()
-    if not showStatTotLegend and options.externalPostfitPlot: leg0.Draw()
+    if not options.externalPostfitPlot:
+       if showStatTotLegend: leg1.Draw()
+       if not showStatTotLegend and options.externalPostfitPlot: leg0.Draw()
     global legendratio0_, legendratio1_
     legendratio0_ = leg0
     legendratio1_ = leg1
@@ -627,7 +634,9 @@ def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-5,cutoffSignals=True,
                 myStyle = mcStyle if type(mcStyle) == str else mcStyle[1]
                 bgEntries.append( (pmap[p],lbl,myStyle) )
         nentries = len(sigEntries) + len(bgEntries) + ('data' in pmap)
-
+        if extralabel:
+           nentries +1
+           
         height = (.20 + textSize*max(nentries-3,0))
         if columns > 1: height = 1.3*height/columns
         (x1,y1,x2,y2) = (0.97-legWidth if doWide else .85-legWidth, .9 - height, .90, .91)
@@ -655,7 +664,7 @@ def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-5,cutoffSignals=True,
         leg.SetNColumns(columns)
         entries = []
         if 'data' in pmap: 
-            entries.append((pmap['data'].raw(), mca.getProcessOption('data','Label','Data', noThrow=True), 'LPE'))
+            entries.append((pmap['data'].raw(), mca.getProcessOption('data','Label','Data', noThrow=True), 'PE'))
         for (plot,label,style) in sigEntries: entries.append((plot.raw(),label,style))
         for (plot,label,style) in  bgEntries: entries.append((plot.raw(),label,style))
         if totalError:  entries.append((totalError,"Total unc.","F"))
@@ -664,6 +673,7 @@ def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-5,cutoffSignals=True,
            leg0_object = 0
            entries.append((leg0_object, extralabel , ""));
         nrows = int(ceil(len(entries)/float(columns)))
+
         for r in xrange(nrows):
             for c in xrange(columns):
                 i = r+c*nrows
@@ -952,12 +962,15 @@ class PlotMaker:
                 # set borders, if necessary create subpads
                 if doRatio:
                     c1.SetWindowSize(plotformat[0] + (plotformat[0] - c1.GetWw()), (plotformat[1]+150 + (plotformat[1]+150 - c1.GetWh())));
-                    p1 = ROOT.TPad("pad1","pad1",0,0.30,1,1);
+                    eps = 0.03
+                    p1 = ROOT.TPad("pad1","pad1",0,0.30-eps,1,1);
                     p1.SetTopMargin(p1.GetTopMargin()*options.topSpamSize);
-                    p1.SetBottomMargin(0 if options.attachRatioPanel else 0.025);
+                    #p1.SetBottomMargin(0 if options.attachRatioPanel else 0.025);
+                    p1.SetBottomMargin(eps);
                     p1.Draw();
-                    p2 = ROOT.TPad("pad2","pad2",0,0,1,0.30);
-                    p2.SetTopMargin(0 if options.attachRatioPanel else 0.06);
+                    p2 = ROOT.TPad("pad2","pad2",0,0,1,0.27*(1-eps));
+                    #p2.SetTopMargin(0 if options.attachRatioPanel else 0.06);
+                    p2.SetTopMargin(0 );
                     p2.SetBottomMargin(0.3);
                     p2.SetFillStyle(0);
                     p2.Draw();
@@ -979,7 +992,7 @@ class PlotMaker:
                     total.Draw("AXIS SAME")
                 else: 
                     if self._options.errors:
-                        ROOT.gStyle.SetErrorX(0.5)
+                        ROOT.gStyle.SetErrorX(0.0)
                         stack.Draw("SAME E NOSTACK")
                     else:
                         stack.Draw("SAME HIST NOSTACK")

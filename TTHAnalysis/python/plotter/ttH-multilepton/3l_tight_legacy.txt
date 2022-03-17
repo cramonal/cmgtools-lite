@@ -16,6 +16,9 @@ vetottHZZ: !(mZ2>0 && m4l<140)
 
 tauveto: nTauTight==0
 
+ttHnode: DNN_3l_predictions_ttH>DNN_3l_predictions_rest &&  DNN_3l_predictions_ttH>DNN_3l_predictions_tH; Disable=True
+tHnode: DNN_3l_predictions_tH>DNN_3l_predictions_rest &&  DNN_3l_predictions_tH>DNN_3l_predictions_ttH; Disable=True
+Restnode: DNN_3l_predictions_rest>DNN_3l_predictions_ttH &&  DNN_3l_predictions_rest>DNN_3l_predictions_tH; Disable=True
 x2j: nJet25==2 ; Disable=True
 4j: nJet25>=4 ; Disable=True
 gt2b: nBJetLoose25 >= 2 ; Disable=True
