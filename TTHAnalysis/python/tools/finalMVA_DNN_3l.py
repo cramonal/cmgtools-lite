@@ -100,7 +100,7 @@ class finalMVA_DNN_3l(Module):
         ret = []
         for worker in self._MVAs:
             name = worker.name
-            if not hasattr(event,"nJet25_jerUp_Recl") and ('_jes' in name or  '_jer' in name or '_uncl' in name): continue # using jer bc components wont change
+            if ( not hasattr(event,"nJet25_jerUp_Recl") and not hasattr(event, "nJet25_jesBBEC1_yearDown_Recl")) and ('_jes' in name or  '_jer' in name or '_uncl' in name): continue # using jer bc compo
             ret.extend( [(x,y) for x,y in worker(event).iteritems()])
             
 
