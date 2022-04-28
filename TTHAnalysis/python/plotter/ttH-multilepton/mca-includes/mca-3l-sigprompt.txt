@@ -1,5 +1,7 @@
-ttH+   : TTHnobb_fxfx : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0; FillColor=ROOT.kOrange+10
-
+#ttH+   : TTHnobb_fxfx : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0; FillColor=ROOT.kOrange+10
+ttH  : TTH_ctcvcp_new : xsec*2*LHEReweightingWeight[11] :LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && event%2==1; Label="ttH (CP-even)", FillColor=ROOT.kOrange+10,genSumWeightName="LHEReweightingSumw_[11]/LHEScaleSumw_[4]*genEventSumw_"
+ttH_even+  : TTH_ctcvcp_new : xsec*2*LHEReweightingWeight[11] :LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && event%2==1; Label="ttH (CP-even)", FillColor=ROOT.kOrange+10,genSumWeightName="LHEReweightingSumw_[11]/LHEScaleSumw_[4]*genEventSumw_"
+ttH_odd+ : TTH_ctcvcp_new : xsec*LHEReweightingWeight[59]*2 : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0 && event%2==1 ; Label="ttH (CP-odd)", FillColor=ROOT.kBlue, genSumWeightName="LHEReweightingSumw_[59]/LHEScaleSumw_[4]*genEventSumw_"  
 tHq	: THQ_ctcvcp_new: 0.07096*LHEReweightingWeight[11] : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0; FillColor=ROOT.kBlue,genSumWeightName="LHEReweightingSumw_[11]/LHEScaleSumw_[4]*genEventSumw_"
 tHW	: THW_ctcvcp_new :0.01561*LHEReweightingWeight[11] : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && LepGood3_mcMatchId!=0; FillColor=ROOT.kOrange+8,genSumWeightName="LHEReweightingSumw_[11]/LHEScaleSumw_[4]*genEventSumw_"
 
